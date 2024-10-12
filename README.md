@@ -2,7 +2,7 @@
 
 # Postman Zendesk Support Center
 
-[Postman Support Center](https://support.postman.com) theme support for Zendesk v2 API. The post-zen theme consists of a set of templates, styles, a Javascript file used mainly for interactions and an assets folder. The theme is managed by the Postman Marketing Engineering Team.
+[Postman Support Center](https://support.llamanetworks.com) theme support for Zendesk v2 API. The post-zen theme consists of a set of templates, styles, a Javascript file used mainly for interactions and an assets folder. The theme is managed by the Postman Marketing Engineering Team.
 
 ## Project structure
 

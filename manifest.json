@@ -1,5 +1,5 @@
 {
-  "name": "post-zen",
+  "name": "llama-zen",
   "author": "Brandon Castillo, Marketing Engineering, Postman.",
   "version": "1.15.0",
   "api_version": 2,
@@ -13,14 +13,14 @@
           "type": "color",
           "description": "brand_color_description",
           "label": "brand_color_label",
-          "value": "rgba(255, 108, 55, 1)"
+          "value": "#2589BD"
         },
         {
           "identifier": "brand_text_color",
           "type": "color",
           "description": "brand_text_color_description",
           "label": "brand_text_color_label",
-          "value": "#FFFFFF"
+          "value": "#3B5563"
         },
         {
           "identifier": "text_color",
@@ -34,7 +34,7 @@
           "type": "color",
           "description": "link_color_description",
           "label": "link_color_label",
-          "value": "rgba(31, 115, 183, 1)"
+          "value": "#1F73B7"
         },
         {
           "identifier": "hover_link_color",

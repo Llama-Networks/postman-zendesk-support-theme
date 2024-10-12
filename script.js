@@ -644,7 +644,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // Notification Banner
-if (window.location.href.includes("https://support.postman.com")) {
+if (window.location.href.includes("https://support.llamanetworks.com")) {
   document.addEventListener('DOMContentLoaded', async function () {
     // Article label to be considered for the alerts
     const label = 'Alert'
