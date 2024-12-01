@@ -1,7 +1,7 @@
 {
   "name": "llama-zen",
   "author": "Brandon Castillo, Marketing Engineering, Postman.",
-  "version": "1.15.11",
+  "version": "1.15.13",
   "api_version": 2,
   "default_locale": "en-us",
   "settings": [
