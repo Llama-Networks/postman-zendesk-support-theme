@@ -1,6 +1,6 @@
 {
   "name": "postman-zendesk-support-theme",
-  "version": "1.15.13",
+  "version": "1.15.14",
   "author": "Brandon Castillo",
   "private": true,
   "scripts": {
@@ -17,6 +17,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/spitcool/postman-zendesk-support-theme"
+    "url": "https://github.com/Llama-Networks/postman-zendesk-support-theme"
   }
 }
