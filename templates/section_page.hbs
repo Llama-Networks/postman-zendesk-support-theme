@@ -16,6 +16,7 @@
           {{/if}}
         </header>
         {{#if section.sections}}
+        <h3>Categories</h3>
         <ul class="section-list">
           {{#each section.sections}}
           <li class="section-list-item">
@@ -35,6 +36,7 @@
         {{pagination "section.sections"}}
 
         {{#if section.articles}}
+        <h3>Articles</h3>
         <ul class="article-list">
           {{#each section.articles}}
           <li class="article-list-item {{#if promoted}} article-promoted{{/if}}">
