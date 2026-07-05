@@ -6246,7 +6246,7 @@ a.ln-card:hover {
   background: #fbf3e7;
   border-top: 1px solid #eddcc2;
   border-bottom: 1px solid #eddcc2;
-  padding: 48px 0;
+  padding: 42px 0;
 }
 
 .ln-eyebrow {
@@ -6259,12 +6259,17 @@ a.ln-card:hover {
 }
 
 .ln-pep-intro {
-  gap: 20px;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.ln-pep-copy {
+  max-width: 440px;
 }
 
 .ln-pep-badge {
   flex: none;
-  width: 120px;
+  width: 94px;
   height: auto;
   filter: drop-shadow(0 3px 8px rgba(34, 51, 63, 0.18));
 }
@@ -6309,8 +6314,17 @@ a.ln-card:hover {
   text-decoration: none;
 }
 
+.ln-pep-link-grid {
+  row-gap: 14px;
+}
+
+.ln-pep-link-grid .ln-pep-link {
+  height: 100%;
+  margin-bottom: 0;
+}
+
 .ln-pep-tools {
-  margin-top: 8px;
+  margin-top: 18px;
   margin-bottom: 0;
   font-size: 14px;
   color: #5c6f7c;
@@ -6440,5 +6454,8 @@ a.ln-card:hover {
   .ln-pep-intro {
     flex-wrap: wrap;
   }
-}
 
+  .ln-pep-badge {
+    width: 82px;
+  }
+}
