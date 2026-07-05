@@ -508,74 +508,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  /* Desktop Navbar Animations
-   ***********************************************************************/
-
-  function getCookie(a) {
-    if (typeof document !== 'undefined') {
-      const b = document.cookie.match('(^|;)\\s*' + a + '\\s*=\\s*([^;]+)');
-      return b ? b.pop() : '';
-    }
-    return false;
-  }
-  const cookie = getCookie('getpostmanlogin');
-  // Checks if login cookie exists and changes link in uber-nav from 'sign in' to 'launch postman'.
-  // Hides 'register' button if signed in
-
-  if (cookie !== 'yes') {
-    const signInButton = document.querySelector('.nav-sign-in-button');
-    const signUpButton = document.querySelector('.nav-sign-up-button');
-    signInButton.classList.remove('d-none');
-    signInButton.setAttribute(
-      'href',
-      'https://identity.getpostman.com/login?continue=https%3A%2F%2Fgo.postman.co%2Fbuild',
-    );
-    signUpButton.classList.remove('d-none');
-    signUpButton.setAttribute(
-      'href',
-      'https://identity.getpostman.com/signup?continue=https%3A%2F%2Fgo.postman.co%2Fbuild',
-    );
-  } else {
-    const launchPostmanButton = document.querySelector('.nav-launch-postman-button');
-    launchPostmanButton.classList.remove('d-none');
-    launchPostmanButton.setAttribute('href', 'https://go.postman.co/build');
-  }
-
-  /* Postman Status API
-   ***********************************************************************/
-
-  function setStatusIcon(icon) {
-    const statusResponse = document.getElementById('pm-status');
-    let fontAwesomeIcon = document.createElement('i');
-    fontAwesomeIcon.className = icon;
-    return statusResponse.prepend(fontAwesomeIcon);
-  }
-
-  const statusResponse = document.getElementById('pm-status');
-  if (statusResponse !== null || undefined) {
-    let postmanStatusAPI = new StatusPage.page({ page: 'ms1frkqnsp7r' });
-    postmanStatusAPI.status({
-      success: function (data) {
-        const { indicator, description } = data.status;
-        if (indicator === 'none') {
-          statusResponse.prepend(`All systems operational. `);
-          setStatusIcon(`icon-indicator fa-solid fa-check status-green`);
-        } else if (indicator === 'minor') {
-          statusResponse.prepend(`${description}. `);
-          setStatusIcon('icon-indicator fa-solid fa-square-minus status-yellow');
-        } else if (indicator === 'major') {
-          statusResponse.prepend(`${description}. `);
-          setStatusIcon('icon-indicator fa-solid fa-xmark status-red');
-        } else if (indicator === 'critical') {
-          statusResponse.prepend(`${description}. `);
-          setStatusIcon('icon-indicator fa-solid fa-wrench status-blue');
-        } else if (indicator === '') {
-          statusResponse.prepend(`We're having issues retrieving data for Postman.`);
-        }
-      },
-    });
-  }
-
   /* Navbar Global and Secondary
    ***********************************************************************/
   $('.mobile-icon-button_caret').bind('click', function () {
@@ -700,41 +632,91 @@ if (window.location.href.includes("https://support.llamanetworks.com")) {
   });
 }
 
-function getCookie(cname) {
-  let name = cname + "=";
-  let decodedCookie = decodeURIComponent(document.cookie);
-  let ca = decodedCookie.split(';');
-  for(let i = 0; i <ca.length; i++) {
-    let c = ca[i];
-    while (c.charAt(0) == ' ') {
-      c = c.substring(1);
-    }
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
-    }
+// Footer: keep the copyright year current
+document.addEventListener('DOMContentLoaded', function () {
+  var footerYear = document.getElementById('footer-year');
+  if (footerYear) {
+    footerYear.textContent = new Date().getFullYear();
   }
-  return "";
-}
+});
 
-(function updateMyRequestsTitleOnLogin() {
-  setTimeout(() => {
-    let profile = document.getElementById("pm-signed-in");
-    const isSignedIn = getCookie("ajs_user_id");
-    isSignedIn && profile ? profile.setAttribute("title", "My Requests") : null;
-  }, 1000)
+// Home page: recently updated articles (Help Center API, same approach as the alert banner)
+document.addEventListener('DOMContentLoaded', async function () {
+  var container = document.getElementById('ln-recent-articles');
+  if (!container) return;
 
-}())
+  var band = document.getElementById('ln-recent');
 
+  function timeAgo(iso) {
+    var days = Math.floor((Date.now() - new Date(iso).getTime()) / 86400000);
+    if (days <= 0) return 'today';
+    if (days === 1) return 'yesterday';
+    if (days < 7) return days + 'd ago';
+    if (days < 30) return Math.floor(days / 7) + 'w ago';
+    return Math.floor(days / 30) + 'mo ago';
+  }
 
-jQuery(document).ready(function () {
-  /* pmtSDK
-  ***********************************************************************/
-  window.pmt=function(){var t={version:"v2.0.39",log:function(e){t.output=t.output||[],t.output.push(e)},url:function(){return (URL && new URL(window.location.href).href).startsWith("http")&&(new URL(window.location.href).href)||""},set:function(e,o){t[e]=o},getPubId:function(){return(document.cookie.match("(^|;) ?_PUB_ID=([^;]*)(;|$)")||[])[2]},drivePubId:function(e){const o=t.url(),n="pub_id=";let a,c;if(o.match(n)){if(c=o.split(n).pop().split("&").shift(),a="_PUB_ID="+c+"; path=/",document.cookie=a,e){let t=o.replace(n+c,"");t=t.replace("?&","?"),t=t.replace("&&","&");t.split("?").pop()||(t=t.split("?").shift());const e=t.length-1;"&"===t.charAt(e)&&(t=t.substring(0,e)),window.location.replace(t)}return a}return t.getPubId()},driveCampaignId:function(e){let o;const n="dcid=",a=e&&e.dcid||window.location.search&&window.location.search.match(n)&&window.location.search.split(n).pop().split("&").shift()||(document.cookie.match("(^|;) ?dcid=([^;]*)(;|$)")||[])[2];let c,i;const r=e&&e.form,s=e&&e.url||t.url();return function(t){const e=t;let o;const c=a&&a.replace(n,"");t&&(e.tagName?a&&!e.driver_campaign_id&&(o=document.createElement("input"),o.type="hidden",o.name="driver_campaign_id",o.value=c,e.appendChild(o)):a&&(e.driver_campaign_id=c))}(r),s.match(n)?(c=s.split(n).pop().split("&").shift(),i=new Date,i.setDate(i.getDate()+30),o="dcid="+c+"; expires="+i.toUTCString()+"; path=/",document.cookie=o,o):e}};return t.enablePostmanAnalytics=function(e,o,n){if("function"!=typeof e||e.postmanAnalyticsEnabled||navigator.doNotTrack&&!o._disableDoNotTrack)return e;function a(t){return t.replace(/"/gi,'"')}function c(t){return"string"==typeof t&&t.split(window.location.host).pop()}return o||(o={}),e.postmanAnalyticsEnabled=!0,function(i,r,s,d,l){const u="load"!==r||t.url()!==t.currentURL;if(!u)return!1;e.apply(this,arguments);const p="gtm.uniqueEventId";let m,f,g,h;const w=r||n;t.initCategory||(t.initCategory=i);const y={category:i,action:w,indexType:"client-events",property:o._property||document.location.host,propertyId:document.location.host,traceId:t.getTraceId(null,o),timestamp:(new Date).toISOString()},I=c(t.currentURL)||document.referrer||t.externalURL||"",b=navigator.language||window.navigator.userLanguage||"?";function k(t,e){const o=t&&t.split(",")||[],n=o.length;let a,c;for(a=0;a<n;a+=1){const t=o[a];if(c=-1!==e.indexOf(t),c)break}return c}y.meta={url:c(I),language:b,user:t.user},s&&(y.entityId=s),l&&(y.meta.user=l),"load"===y.action&&y.entityId&&document.body&&document.body.id&&(y.entityId=y.entityId+"#"+document.body.id),d&&(m=parseInt(d,10),f=m&&!m.isNaN&&m||null,h="string"==typeof d,g=h&&d.match(":")&&d.split(":").pop()||h&&d||"object"==typeof d&&a(JSON.stringify(d))||"",f&&(y.value=f),g&&(s?y.entityId+=":"+g:y.entityId=g)),(Object.keys(o)||[]).forEach((function(t){"_"!==t.charAt(0)&&(y[t]=o[t])})),r||"object"!=typeof i||(y.action=i.action||i.event||i[Object.keys(i)[0]],i[p]&&(y.category=p+"-"+i[p])),"local"===y.env&&(y.env="beta"),"object"==typeof y.category&&y.category&&"string"==typeof y.category.category&&(y.category=y.category.category),["category","event","label"].forEach((function(t){"object"==typeof y[t]&&(y[t]=y[t]&&a(JSON.stringify(y[t])))})),y.userId=t.getPubId()||t.store()&&t.store().userId||y.userId,t.userId=y.userId;const _=t.getTraceId().split("|").pop();return t.traceId=t.getTraceId().split(_).shift()+t.userId,window.name&&!window.name.startsWith("pm")&&(window.name=t.getTraceId()),t.api().store(),setTimeout((function(){t.api()}),1e3),y.category&&y.action&&"function"==typeof o.fetch&&o.fetch(o._url,y)||y.entityId&&"object"==typeof document&&(()=>{const e=o._allow&&k(o._allow,document.location.pathname)||!o._allow&&!0,n=o._disallow&&k(o._disallow,document.location.pathname),a=btoa(JSON.stringify(y));if(e&&!n){if(fetch){if("load"===y.action){if(y.action&&!u)return t.trackIt(),!1;y.entityId=y.entityId.split("#").shift()}t.getTraceId(y),fetch(o._url,{method:"POST",headers:{Accept:"text/html","Content-Type":"text/html"},body:a,mode:"no-cors",keepalive:!0}).catch((function(e){t.log(e)})),t.event=y}else!function(t){const e=new XMLHttpRequest;e.open("POST",o._url),e.setRequestHeader("Accept","application/json"),e.setRequestHeader("Content-type","text/plain"),e.send(t)}(a);t.currentURL=t.url(),-1===y.meta.url.indexOf(document.location.host)&&(t.externalURL=y.meta.url)}})(),!0}},t.watch=function(){const e=(new Date).getTime();if(t.store().session>36e5){t.store("time",e),t.store("session",1);let o=t.getTraceId().split("|");o.shift(),o=o.join("|"),t.event&&window.pmt("setScalp",[{property:t.event.property,_traceId:"pm"+btoa((new Date).getTime())+"|"+o}])}else t.store("session",e-t.store().time);return t.store("time",e),t.stored},t.ga=function(){"function"==typeof window.ga&&window.ga.apply(this,arguments)},t.getEnv=function(t){let e;e="production";const o=t||document.location.hostname;return["beta","local","stag"].forEach((function(t){o.match(t)&&(e=t)})),e},t.setScalp=function(e){if("object"==typeof window){const o=(document.location.search&&document.location.search.match("dcid=([^;]*)(;|$)")||[])[1],n=o&&o.split("&").shift()||(document.cookie.match("(^|;) ?dcid=([^;]*)(;|$)")||[])[2],a=document.location.search.substr(1).split("&"),c=window.localStorage.getItem("utms"),i=c&&c.split(",")||[];a.forEach((t=>{const e=t.match("([UTM|utm].*)=([^;]*)(;|$)");e&&(-1!==e[0].indexOf("utm")||-1!==e[0].indexOf("UTM"))&&i.push(e[0])}));const r=i.length&&i.join(".")||"",s="PM."+btoa((new Date).toISOString()),d=t.getUserId()||window.name&&window.name.match("|PM.")&&window.name.split("|").pop()||t.store()&&t.store().userId;t.store("userId",d||s);const l=(document.cookie.match("(^|;) ?_pm.store=([^;]*)(;|$)")||[])[2],u=l&&JSON.parse(l)||{},p="pm"+btoa((new Date).getTime());"string"==typeof window.name&&"pm"===window.name.substring(0,2)||(n&&-1===window.name.indexOf("DCID.")?window.name=!t.scalpCount&&u.traceId||p+"|DCID."+n+(r&&"|"+r||"")+"|"+(d||s):window.name=!t.scalpCount&&u.traceId||p+(r&&"|"+r||"")+"|"+(d||s));const m=!t.scalpCount&&u.traceId||e._traceId||window.parent&&window.parent.name||window.name,f=function(){t.scalpCount||(t.scalpCount=0),t.scalpCount+=1,t.watch()},g=t.getPubId()||d||window.name.split("|").pop(),h={env:"function"==typeof t.getEnv&&t.getEnv()||"production",type:"events-website",userId:g,_allow:!e.disallow&&e.allow,_disableDoNotTrack:void 0===e.disableDoNotTrack||e.disableDoNotTrack,_disallow:!e.allow&&e.disallow,_property:e.property||document.location.host,_traceId:m},w=h.env.match("prod")?"https://bi.pst.tech/events":"https://bi-beta.pst.tech/events";h._url=e.url||w,t.store("session",1),t.store("traceId",m),t.traceId=m,t.userId=g,t.scalp=t.enablePostmanAnalytics(f,h)}},t.getTraceUrl=function(e){const o=-1!==e.indexOf("?")?"&":"?";return e+o+"trace="+t.getTraceId()},t.trace=function(e){document.location.href=t.getTraceUrl(e)},t.getUtmUrl=function(e){const o=-1!==e.indexOf("?")?"&":"?",n=t.traceId.split(".").pop(),a=t.traceId.split("."+n).shift().substr(1).split("."),c=[];return a.forEach((t=>{const e=t.match("([UTM|utm].*)=([^;]*)(;|$)");e&&(-1!==e[0].indexOf("utm")||-1!==e[0].indexOf("UTM"))&&c.push(e[0])})),e+o+(c.length&&c.join("&")||"utm="+document.location.host)},t.utm=function(e){let o=t.getUtmUrl(e);o.match("trace=")||(o=o+"&trace="+t.traceId),document.location.href=o},t.trackClicks=function(e,o){const n=function(n){const a=document.body&&document.body.id&&"#"+document.body.id||"";if(e){const c=n.target.getAttribute(e);c&&t.scalp(o||t.initCategory,"click","target",a+c)}else if(!e&&("string"==typeof n.target.className||"string"==typeof n.target.id)){const e=n.target.className||n.target.id||n.target.parentNode.className||-1;if("string"==typeof e){const c=document.location.pathname+a+":"+n.target.tagName+"."+e.split(" ").join("_");try{t.scalp(o||t.initCategory,"click",c)}catch(e){t.log(e.message)}}}};document.body.getAttribute("data-trackClicks")||document.body.addEventListener("mousedown",n,!0),document.body.setAttribute("data-trackClicks",e||"default")},t.driveTrack=function(e){let o;const n="_track=",a=e&&e._track||window.location.search&&window.location.search.match(n)&&window.location.search.split(n).pop().split("&").shift()||(document.cookie.match("(^|;) ?"+n+"([^;]*)(;|$)")||[])[2],c=e&&e.url||t.url(),i=t.getEnv(),r=i.match("stag")?"stage":i;return t.tracking=!0,t.trackIt(),c.match(n)?(o="postman-"+r+".track="+a+"; path=/",document.cookie=o,o):e},t.trackIt=function(){const e=(document.cookie.match("(^|;) ?postman-[a-z]+.track=([^;]*)(;|$)")||[])[2];if(e&&t.tracking){let o=t.url();const n=-1===o.indexOf("?")?"?":"&";-1===o.indexOf("_track")&&"default"!==e&&(o=`${o}${n}_track=${e}`,document.location.replace(o))}},t.xhr=function(t,e){const o=new XMLHttpRequest,n="t="+(new Date).getTime(),a=-1===t.indexOf("?")?"?":"&",c=t+a+n;o.withCredentials=!0,o.addEventListener("readystatechange",(function(){4===this.readyState&&e(this.responseText)})),o.open("GET",c),o.send()},t.bff=function(e,o,n){const a=(n?"/mkapi/":"https://www.postman.com/mkapi/")+e+".json";t.xhr(a,o)},t.store=function(e,o){const n=(document.cookie.match("(^|;) ?_pm.store=([^;]*)(;|$)")||[])[2],a=n&&JSON.parse(n)||{};t.stored={...a},e&&o&&(t.stored[e]=o);const c=document.location.host.split("."),i=c.pop(),r=c.pop(),s=new Date;s.setDate(s.getDate()+1080);let d="_pm.store="+JSON.stringify(t.stored)+"; expires="+s.toUTCString()+"; domain=."+r+"."+i+"; path=/";if(!r){const t=d.split("domain=").pop().split(";").shift();d=d.replace(t,"localhost")}return document.cookie=d,t.stored},t.getTraceIdFromCookie=function(){return(document.cookie.match("(^|;) ?_pmt=([^;]*)(;|$)")||[])[2]},t.getTraceIdFromUrl=function(){const e="trace=",o=t.url(),n=o.match(e)&&o.split(e).pop().split("&").shift();return n&&t.store("traceId",n),n},t.getTraceId=function(e,o){const n=t.getTraceIdFromUrl()||t.getTraceIdFromCookie()||t.store().traceId||t.traceId||o&&o._traceId||"";return n&&e&&(e.traceId=n),n},t.getUserId=function(e){const o=t.getTraceId().split("|").pop()||t.store().userId||t.userId||"";return o&&e&&(e.userId=o),o},t.api=function(e){"object"==typeof e&&Object.keys(e).forEach((function(t){window[t]=e[t]}));const o=window.pm,n=o&&o.billing,a=n&&n.plan,c=a&&a.features;if(c){const e=c&&c.is_paid_plan_growth,o=e&&e.value,n=c&&c.is_enterprise_plan_growth,a=(n&&n.value?"enterprise":o&&"paid")||"free";t.store("plan",a)}return t},setTimeout((function(){const t=document.getElementById("pmtSDK"),e=t&&t.getAttribute("data-track-category")||"pm-analytics",o=t&&t.getAttribute("data-track-property"),n=t&&t.getAttribute("data-track-url"),a=t&&"false"!==t.getAttribute("data-track-disable-do-not-track"),c=t&&"true"===t.getAttribute("data-drive-track"),i=t&&"false"!==t.getAttribute("data-drive-campaign-id"),r=t&&"false"!==t.getAttribute("data-drive-pub-id"),s=t&&"false"!==t.getAttribute("data-track-load"),d=t&&"false"!==t.getAttribute("data-track-clicks"),l=d&&t.getAttribute("data-track-clicks-attribute")||null;if(o){const t={property:o};n&&(t.url=n),a&&(t.disableDoNotTrack=a),window.pmt("setScalp",[t]),s&&window.pmt("scalp",[e,"load",document.location.pathname]),d&&window.pmt("trackClicks",[l,e]),i&&window.pmt("driveCampaignId"),r&&window.pmt("drivePubId",[!0]),c&&window.pmt("driveTrack")}}),1e3),function(e,o){return t[e]?"function"==typeof t[e]?t[e].apply(t,o):t[e]:null}}();
+  var locale = document.querySelector('html').getAttribute('lang').toLowerCase();
+  var url =
+    '/api/v2/help_center/' +
+    locale +
+    '/articles.json?sort_by=edited_at&sort_order=desc&per_page=9&include=sections,categories';
 
-  /* pmtConfig
-  ***********************************************************************/
-  window.pmt('setScalp', [{ property: 'postman-support-center' }]);
-  window.pmt('scalp', ['pm-analytics', 'load', document.location.pathname]);
-  window.pmt('trackClicks', []);
+  try {
+    var data = await (await fetch(url)).json();
+    var sectionsById = {};
+    (data.sections || []).forEach(function (s) {
+      sectionsById[s.id] = s;
+    });
+    var categoriesById = {};
+    (data.categories || []).forEach(function (c) {
+      categoriesById[c.id] = c;
+    });
 
-})
+    // Alert-banner articles are site chrome, not content
+    var articles = (data.articles || [])
+      .filter(function (a) {
+        return (a.label_names || []).indexOf('Alert') === -1;
+      })
+      .slice(0, 6);
+
+    if (articles.length === 0) {
+      if (band) band.classList.add('d-none');
+      return;
+    }
+
+    articles.forEach(function (article) {
+      var col = document.createElement('div');
+      col.className = 'col-12 col-lg-6';
+
+      var link = document.createElement('a');
+      link.className = 'ln-art';
+      link.href = article.html_url;
+
+      var title = document.createElement('span');
+      title.className = 'ln-art-title';
+      title.textContent = article.title;
+      link.appendChild(title);
+
+      var section = sectionsById[article.section_id];
+      var category = section && categoriesById[section.category_id];
+      if (category) {
+        var chip = document.createElement('span');
+        chip.className = 'ln-art-cat';
+        chip.textContent = category.name;
+        link.appendChild(chip);
+      }
+
+      var when = document.createElement('span');
+      when.className = 'ln-art-when';
+      when.textContent = timeAgo(article.edited_at);
+      link.appendChild(when);
+
+      col.appendChild(link);
+      container.appendChild(col);
+    });
+  } catch (e) {
+    if (band) band.classList.add('d-none');
+  }
+});
+

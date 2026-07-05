@@ -1,7 +1,7 @@
 {
   "name": "llama-zen",
   "author": "Brandon Castillo, Marketing Engineering, Postman.",
-  "version": "1.16.1",
+  "version": "1.17.0",
   "api_version": 2,
   "default_locale": "en-us",
   "settings": [
@@ -307,10 +307,24 @@
       "label": "home_page_group_label",
       "variables": [
         {
-          "identifier": "show_recent_activity",
+          "identifier": "show_quick_actions",
           "type": "checkbox",
-          "description": "recent_activity_description",
-          "label": "recent_activity_label",
+          "description": "quick_actions_description",
+          "label": "quick_actions_label",
+          "value": true
+        },
+        {
+          "identifier": "show_peplink_spotlight",
+          "type": "checkbox",
+          "description": "peplink_spotlight_description",
+          "label": "peplink_spotlight_label",
+          "value": true
+        },
+        {
+          "identifier": "show_recent_articles",
+          "type": "checkbox",
+          "description": "recent_articles_description",
+          "label": "recent_articles_label",
           "value": true
         }
       ]
