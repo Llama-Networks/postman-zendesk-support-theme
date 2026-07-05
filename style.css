@@ -6362,23 +6362,22 @@ a.ln-card:hover {
 }
 
 .ln-help-primary {
-  background: $brand_color;
-  border-color: $brand_color;
+  background: #176c96;
+  border-color: #176c96;
 }
 
-.ln-help-primary b {
+.ln-help .ln-help-primary b {
   color: #fff;
 }
 
 .ln-help .ln-help-primary p {
-  color: #fff;
-  opacity: 0.88;
+  color: #f2fbff;
 }
 
 .ln-help-btn {
   display: inline-block;
   background: #fff;
-  color: $brand_color;
+  color: #0f5f86;
   border-radius: 6px;
   padding: 9px 16px;
   font-weight: 600;
@@ -6386,7 +6385,7 @@ a.ln-card:hover {
 }
 
 .ln-help-btn:hover {
-  color: $hover_link_color;
+  color: #0b4f70;
   text-decoration: none;
 }
 
